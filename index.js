@@ -14,9 +14,19 @@ const router=express.Router();
 app.use(express.json());
 app.use(cors({
   origin:"*"
-}))
-app.use("/api/products",productRouter)
+}));
+app.use("/api/products",productRouter);
 app.use("/api/payment",paymentRouter);
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+      res.header('Access-Control-Max-Age', '86400');
+      return res.status(204).end();
+  }
+  next();
+});
 app.get("/",(req,res)=>{
   res.status(200).json({
     status:"success",
