@@ -5,6 +5,7 @@ import cors from "cors";
 import {productRouter} from "./src/routes/product.route.js"
 import { fetchAllCategories, getCategory } from "./src/controllers/product.controller.js";
 import { filters } from "./src/middlewares/filters.js";
+import { paymentRouter } from "./src/routes/payment.route.js";
 
 dotenv.config();
 const port = process.env.PORT || 4000;
@@ -15,6 +16,7 @@ app.use(cors({
   origin:"*"
 }))
 app.use("/api/products",productRouter)
+app.use("/api/payment",paymentRouter);
 app.get("/",(req,res)=>{
   res.status(200).json({
     status:"success",
